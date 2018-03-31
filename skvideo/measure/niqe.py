@@ -1,13 +1,13 @@
 from ..utils import *
 
 import numpy as np
-import scipy.misc
+import skimage.transform
 import scipy.io
 
 from os.path import dirname
 from os.path import join
 
-# only used during training 
+# only used during training
 #from skimage.util.shape import view_as_windows
 
 def _niqe_extract_subband_feats(mscncoefs):
@@ -66,7 +66,7 @@ def _get_patches_generic(img, patch_size, is_train, stride):
 
 
     img = img.astype(np.float32)
-    img2 = scipy.misc.imresize(img, 0.5, interp='bicubic', mode='F')
+    img2 = skimage.transform.rescale(img, scale=0.5, order=3)
 
     mscn1, var, mu = compute_image_mscn_transform(img)
     mscn1 = mscn1.astype(np.float32)

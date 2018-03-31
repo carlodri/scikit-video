@@ -4,7 +4,7 @@ import skvideo.datasets
 
 import matplotlib.pyplot as plt
 import numpy as np
-import scipy.misc
+import skimage.transform
 
 
 def getPlots(motionData):
@@ -75,7 +75,9 @@ writer = skvideo.io.FFmpegWriter("motion.mp4", inputdict={
 
 for i in xrange(T-1):
     a, b, c = getPlots(motionData[i])
-    frame = scipy.misc.imresize(videodata[i+1], (a.shape[0], a.shape[1], 3))
+    frame = skimage.transform.resize(
+        videodata[i + 1],
+        output_shape=(a.shape[0], a.shape[1], 3))
 
     outputframe = np.zeros((frame.shape[0]*2, frame.shape[1]*2, 3), dtype=np.uint8)
 

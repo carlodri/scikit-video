@@ -2,6 +2,7 @@ import numpy as np
 import scipy.misc as sc
 import scipy.signal
 import scipy.io
+import skimage.transform
 
 def mean_cov(X):
 	n,p = X.shape
@@ -235,10 +236,10 @@ class Steerable:
 				parent = []
 				w, h = np.shape(sublevel[cband])
 				if pyr_h > 0:
-					child= scipy.misc.imresize(coef[pyr_h][cband], 50, interp='bilinear', mode='F')
+					child= skimage.transform.rescale(coef[pyr_h][cband], scale=.5, order=1)
 				if pyr_h+3 < height:
 					#parent = scipy.misc.imresize(coef[pyr_h+2][cband], 2.0, interp='bilinear', mode='F')
-					parent = scipy.misc.imresize(coef[pyr_h+2][cband], 200, interp='bilinear', mode='F')
+					parent = skimage.transform.rescale(coef[pyr_h+2][cband], scale=2.0, order=1)
 					parent = parent[1:-1, 1:-1]
 					wp, hp = np.shape(parent)
 					#print np.shape(parent)

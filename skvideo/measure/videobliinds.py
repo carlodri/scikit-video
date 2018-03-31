@@ -5,6 +5,7 @@ import scipy.ndimage
 import scipy.fftpack
 import scipy.stats
 import scipy.io
+import skimage.transform
 import sys
 
 from os.path import dirname
@@ -123,7 +124,7 @@ def computequality(img, blocksizerow, blocksizecol, mu_prisparam, cov_prisparam)
         img = img[:, :-woffset]
 
     img = img.astype(np.float32)
-    img2 = scipy.misc.imresize(img, 0.5, interp='bicubic', mode='F')
+    img2 = skimage.transform.rescale(img, scale=.5, order=3)
 
     mscn1, var, mu = compute_image_mscn_transform(img, extend_mode='nearest')
     mscn1 = mscn1.astype(np.float32)
